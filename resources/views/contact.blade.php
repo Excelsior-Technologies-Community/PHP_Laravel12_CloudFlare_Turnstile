@@ -1,107 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Contact Form | Cloudflare Turnstile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <title>Contact Form</title>
 
-<!-- Turnstile -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container{
+            width: 100%;
+            max-width: 1000px;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .left{
+            flex: 1;
+            background: linear-gradient(135deg, #4338ca, #7e22ce);
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left h1{
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        .left p{
+            font-size: 18px;
+            line-height: 1.7;
+            color: #ddd;
+        }
+
+        .features{
+            margin-top: 30px;
+        }
+
+        .features div{
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .right{
+            flex: 1;
+            padding: 50px;
+        }
+
+        .right h2{
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .right p{
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .form-group{
+            margin-bottom: 20px;
+        }
+
+        label{
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input,
+        textarea{
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus,
+        textarea:focus{
+            border-color: #4f46e5;
+        }
+
+        textarea{
+            resize: none;
+        }
+
+        .btn{
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover{
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .view-btn{
+            display: block;
+            text-align: center;
+            background: #111827;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .view-btn:hover{
+            background: #000;
+        }
+
+        .success{
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #86efac;
+        }
+
+        .error{
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #fca5a5;
+        }
+
+        ul{
+            margin-left: 20px;
+        }
+
+        @media(max-width: 768px){
+
+            .container{
+                flex-direction: column;
+            }
+
+            .left,
+            .right{
+                padding: 30px;
+            }
+
+            .left h1{
+                font-size: 35px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
-<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center">
+<body>
 
-<div class="w-full max-w-lg bg-white shadow-2xl rounded-xl p-8">
+<div class="container">
 
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">
-        Contact Us
-    </h1>
+    <!-- Left Side -->
+    <div class="left">
 
-    <p class="text-center text-gray-500 mb-6">
-        Secure form protected by Cloudflare Turnstile
-    </p>
+        <h1>
+            Contact Us
+        </h1>
 
-    {{-- Success Message --}}
-    @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-3 rounded mb-4 text-sm">
-            {{ session('success') }}
-        </div>
-    @endif
+        <p>
+            Secure contact form built with Laravel 12 and simple CSS design.
+        </p>
 
-    {{-- Error Messages --}}
-    @if($errors->any())
-        <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">
-            <ul class="list-disc ml-4">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <div class="features">
 
-    <form action="{{ route('contact.submit') }}" method="POST" class="space-y-4">
+            <div>✔ Responsive Design</div>
 
-        @csrf
+            <div>✔ Form Validation</div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">
-                Name
-            </label>
-            <input
-                type="text"
-                name="name"
-                value="{{ old('name') }}"
-                required
-                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-                placeholder="Enter your name"
-            >
+            <div>✔ Success Alerts</div>
+
+            <div>✔ Contact Management</div>
+
         </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">
-                Email
-            </label>
-            <input
-                type="email"
-                name="email"
-                value="{{ old('email') }}"
-                required
-                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-                placeholder="Enter your email"
-            >
-        </div>
+    </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">
-                Message
-            </label>
-            <textarea
-                name="message"
-                rows="4"
-                required
-                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-                placeholder="Write your message..."
-            >{{ old('message') }}</textarea>
-        </div>
+    <!-- Right Side -->
+    <div class="right">
 
-        <!-- Cloudflare Turnstile -->
-        <div class="flex justify-center pt-2">
-            <div class="cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITEKEY') }}"></div>
-        </div>
+        <h2>
+            Get In Touch
+        </h2>
 
-        <button
-            type="submit"
-            class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition duration-200"
-        >
-            Send Message
-        </button>
+        <p>
+            Fill out the form below.
+        </p>
 
-    </form>
+        {{-- Success Message --}}
+        @if(session('success'))
+
+            <div class="success">
+
+                {{ session('success') }}
+
+            </div>
+
+        @endif
+
+        {{-- Validation Errors --}}
+        @if($errors->any())
+
+            <div class="error">
+
+                <ul>
+
+                    @foreach($errors->all() as $error)
+
+                        <li>{{ $error }}</li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+        @endif
+
+        <!-- Form -->
+        <form
+            action="{{ route('contact.submit') }}"
+            method="POST">
+
+            @csrf
+
+            <!-- Name -->
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ old('name') }}"
+                    placeholder="Enter your full name">
+
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    placeholder="Enter your email address">
+
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+
+                <label>
+                    Message
+                </label>
+
+                <textarea
+                    name="message"
+                    rows="5"
+                    placeholder="Write your message...">{{ old('message') }}</textarea>
+
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="btn">
+
+                Send Message
+
+            </button>
+
+            <!-- View Messages -->
+            <a
+                href="{{ route('contacts.index') }}"
+                class="view-btn">
+
+                View Submitted Messages
+
+            </a>
+
+        </form>
+
+    </div>
 
 </div>
 
