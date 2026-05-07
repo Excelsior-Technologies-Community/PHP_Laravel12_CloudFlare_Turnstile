@@ -407,3 +407,7 @@ PHP_Laravel12_CloudFlare_Turnstile/
 ---
 
 Your PHP_Laravel12_CloudFlare_Turnstile Project is now ready!
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
